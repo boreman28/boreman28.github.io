@@ -1,1 +1,77 @@
-body{font-family:'Arial',sans-serif}h1,h2,h3{color:#ffffff}header{background:linear-gradient(90deg,#1e3a8a,#6b21a8)}section{padding:3rem 0}footer{background-color:#1f2937;color:#9ca3af}.navbar-dark .navbar-nav .nav-link{color:#9ca3af}.navbar-dark .navbar-nav .nav-link:hover{color:#ffffff}.rounded-full{border-radius:50%}.border-4{border-width:4px}.border-white{border-color:#ffffff}
+body {
+    font-family: 'Arial', sans-serif; /* Establece la fuente principal de la página como Arial */
+}
+
+h1, h2, h3 {
+    color: #ffffff; /* Establece el color del texto de los encabezados h1, h2, y h3 como blanco */
+}
+
+header {
+    background: linear-gradient(90deg, #3e65cf, #6b21a8); /* Aplica un fondo de gradiente al header que va de azul oscuro a morado */
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.icon-large {
+    font-size: 4rem;
+    color: #ff6347;
+    transition: all 0.3s ease;
+}
+
+.icon-large:hover {
+    font-size: 5rem;
+    color: #ff8c00;
+}
+.tech-icons {
+    display: flex;
+    gap: 2rem;
+}
+section {
+    padding: 3rem 0; /* Ajusta el padding de las secciones */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+.dev-icons .icon-large {
+    font-size: 3rem; /* Ajusta el tamaño de los iconos a 3rem */
+    transition: font-size 0.3s ease; /* Agrega una transición suave para el cambio de tamaño */
+}
+
+footer {
+    background-color: #cadaf0; /* Establece el color de fondo del footer a un tono claro de azul */
+    color: #9ca3af; /* Establece el color del texto en el footer a un gris claro */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #9ca3af; /* Establece el color del texto de los enlaces de navegación en una barra de navegación oscura a un gris claro */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Cambia el color del texto de los enlaces de navegación a blanco cuando se pasa el cursor sobre ellos */
+}
+
+.rounded-full {
+    border-radius: 50%; /* Aplica un radio de borde del 50% para hacer los elementos circulares */
+}
+
+.border-4 {
+    border-width: 4px; /* Establece el ancho del borde a 4 píxeles */
+}
+
+.border-white {
+    border-color: #ffffff; /* Establece el color del borde a blanco */
+}
