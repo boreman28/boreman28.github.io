@@ -1,11 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section');
+    const menu = document.querySelector('.navbar-collapse'); // Asumimos que este es el selector del menú
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function () {
+        link.addEventListener('click', function (event) {
+            // Prevenir el comportamiento predeterminado del enlace
+            event.preventDefault();
+
+            // Remover la clase 'active' de todos los enlaces y añadirla al enlace actual
             navLinks.forEach(nav => nav.classList.remove('active'));
             this.classList.add('active');
+
+            // Contraer el menú
+            if (menu && menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            }
+
+            // Desplazamiento suave a la sección correspondiente
             const sectionId = this.getAttribute('href').substring(1);
             document.getElementById(sectionId).scrollIntoView({
                 behavior: 'smooth'
