@@ -8,18 +8,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Funciones principales
     const Theme = {
         init() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            // Cambiamos el tema predeterminado a 'dark'
+            const savedTheme = localStorage.getItem('theme') || 'dark';
             this.applyTheme(savedTheme);
-            themeSwitch.checked = savedTheme === 'dark';
+            // Invertimos la lógica del checkbox
+            themeSwitch.checked = savedTheme === 'light';
         },
-
+    
         applyTheme(theme) {
             body.setAttribute('data-bs-theme', theme);
-            themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            // Invertimos los iconos
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
         },
-
+    
         toggle() {
-            const newTheme = body.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
+            // Invertimos la lógica del toggle
+            const newTheme = body.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
             this.applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         }
