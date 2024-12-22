@@ -1,4 +1,4 @@
-/* Consolidated and optimized CSS */
+/* Variables globales */
 :root {
     --lt-color-gray-100: #f8f9fc;
     --lt-color-gray-200: #f1f3f9;
@@ -14,33 +14,20 @@
     --lt-color-transparent: rgba(255, 255, 255, 0);
 }
 
-/* Base styles */
+/* Estilos base */
 body {
     font-family: 'Arial', sans-serif;
     background-color: var(--lt-color-gray-200);
-    color: var(--lt-color-text-default);
+    color: var(--lt-color-gray-900);
     transition: all 0.3s ease;
     line-height: 1.6;
+    margin-top: 60px; /* Añadido para el navbar fixed */
 }
 
-/* Dark mode */
+/* Modo oscuro */
 body[data-bs-theme="dark"] {
     background-color: var(--lt-color-gray-800);
     color: var(--lt-color-white);
-}
-
-/* Consolidated dark mode adjustments */
-body[data-bs-theme="dark"] h1, 
-body[data-bs-theme="dark"] h2, 
-body[data-bs-theme="dark"] h3, 
-body[data-bs-theme="dark"] .card-title, 
-body[data-bs-theme="dark"] .card-icon {
-    color: var(--lt-color-white);
-}
-
-body[data-bs-theme="dark"] .card {
-    background-color: var(--lt-color-gray-700);
-    border-color: var(--lt-color-gray-600);
 }
 
 /* Navbar */
@@ -48,32 +35,35 @@ body[data-bs-theme="dark"] .card {
     background-color: var(--lt-color-gray-200);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    padding: 1rem 0;
 }
 
 body[data-bs-theme="dark"] .navbar {
     background-color: var(--lt-color-gray-900);
-    color: var(--lt-color-white);
 }
 
 /* Cards */
 .card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid var(--lt-color-border-light);
+    background: var(--lt-color-white);
+    border: 1px solid var(--lt-color-gray-300);
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Añadido para las imágenes hover */
+    overflow: visible; /* Permite que las imágenes hover se muestren fuera de la card */
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-10px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 body[data-bs-theme="dark"] .card {
-    background: rgba(31, 41, 55, 0.9);
+    background: var(--lt-color-gray-700);
+    border-color: var(--lt-color-gray-600);
 }
 
-/* Card icons */
+/* Iconos de card */
 .card-icon {
     font-size: 2.5rem;
     color: var(--lt-color-gray-700);
@@ -81,7 +71,7 @@ body[data-bs-theme="dark"] .card {
 }
 
 .card:hover .card-icon {
-    transform: scale(1.2) rotate(5deg);
+    transform: scale(1.2);
     color: #007bff;
 }
 
@@ -89,38 +79,48 @@ body[data-bs-theme="dark"] .card-icon {
     color: var(--lt-color-white);
 }
 
-/* Buttons */
+/* Botones */
 .btn-primary, .btn-secondary {
-    background: linear-gradient(135deg, rgba(48, 0, 86, 0.8) 0%, rgba(0, 15, 88, 0.8) 100%);
+    background: linear-gradient(135deg, #300056 0%, #000f58 100%);
     border: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
 }
 
 .btn-primary:hover, 
 .btn-secondary:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
 }
 
-/* Social icons */
+/* Iconos sociales */
+.social-icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .social-icons a {
-    color: #ffffff !important;
+    color: var(--lt-color-white);
     font-size: 1.5rem;
     margin: 0 10px;
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: transform 0.3s ease;
+    text-decoration: none;
 }
 
 .social-icons a:hover {
-    color: #7e57c2 !important;
-    transform: scale(1.2) rotate(360deg);
+    transform: scale(1.2);
+    color: #7e57c2;
 }
 
-/* Profile image */
+/* Imagen de perfil */
 #sobre-mi img {
     max-width: 200px;
     border-radius: 50%;
     border: 4px solid var(--lt-color-gray-300);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 #sobre-mi img:hover {
@@ -128,26 +128,71 @@ body[data-bs-theme="dark"] .card-icon {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .card:hover {
-        transform: scale(1.02);
-    }
-}
-
+/* Imágenes en cards */
 .card-img-top {
-    display: none; /* Ocultar imagen por defecto */
-}
-.card:hover .card-img-top {
-    display: block; /* Mostrar imagen al pasar el ratón */
+    display: none;
     position: absolute;
-    top: 0;
-    left: 15;
-    width: 80%;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
     height: auto;
     z-index: 10;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
+
+.card:hover .card-img-top {
+    display: block;
+}
+
+/* Botón de WhatsApp */
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: var(--lt-color-white);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.whatsapp-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Tooltip */
 .tooltip-inner {
-    max-width: 200px; /* Ancho máximo del tooltip */
-    text-align: center;
+    max-width: 200px;
+    padding: 8px 12px;
+    background-color: var(--lt-color-gray-900);
+    border-radius: 4px;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .card-img-top {
+        width: 150px;
+    }
 }
