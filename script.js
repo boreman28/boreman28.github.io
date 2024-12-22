@@ -141,3 +141,67 @@ document.addEventListener('DOMContentLoaded', function() {
 function mostrarAlerta() {
     alert('¡Gracias por tu interés! En breve te contactaré.');
 }
+// Añadir dentro del DOMContentLoaded, después de initializeApp();
+
+const NavbarEffects = {
+    init() {
+        this.setupActiveLinks();
+        this.setupScrollEffect();
+    },
+
+    setupActiveLinks() {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const setActiveLink = () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', setActiveLink);
+        window.addEventListener('load', setActiveLink);
+    },
+
+    setupScrollEffect() {
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    }
+};
+
+// Añadir NavbarEffects a la inicialización
+const initializeApp = () => {
+    try {
+        Theme.init();
+        Navigation.init();
+        Animations.init();
+        SocialLinks.init();
+        NavbarEffects.init(); // Añadir esta línea
+    } catch (error) {
+        console.error('Error during initialization:', error);
+    }
+};
