@@ -1,166 +1,143 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Consolidated event listeners and initialization
+    // Referencias a elementos del DOM
     const themeSwitch = document.getElementById('themeSwitch');
+    const themeIcon = document.getElementById('themeIcon');
     const body = document.body;
-    const navbarToggler = document.querySelector('.navbar-toggler');
     const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    // Funciones principales
+    const Theme = {
+        init() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            this.applyTheme(savedTheme);
+            themeSwitch.checked = savedTheme === 'dark';
+        },
 
-    // Restore saved theme
-    function initializeTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        body.setAttribute('data-bs-theme', savedTheme);
-        themeSwitch.checked = savedTheme === 'dark';
-    }
+        applyTheme(theme) {
+            body.setAttribute('data-bs-theme', theme);
+            themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        },
 
-    // Toggle theme
-    function toggleTheme() {
-        const newTheme = body.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
-        body.setAttribute('data-bs-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    }
+        toggle() {
+            const newTheme = body.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
+            this.applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+    };
 
-    // Smooth scrolling and menu closure
-    function initSmoothScroll() {
-        document.querySelectorAll('a.nav-link').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetSection = document.querySelector(this.getAttribute('href'));
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+    const Navigation = {
+        init() {
+            this.setupSmoothScroll();
+            this.setupMobileMenuClose();
+        },
 
-                // Close menu on mobile
-                if (window.innerWidth < 992) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
-                    bsCollapse.hide();
-                }
-            });
-        });
-    }
-
-    // Section entry animations
-    function setupSectionAnimations() {
-        const sections = document.querySelectorAll('section');
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeIn');
-                    entry.target.style.opacity = 1;
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            section.style.opacity = 0;
-            observer.observe(section);
-        });
-    }
-
-    // Form validation
-    function setupFormValidation() {
-        const forms = document.querySelectorAll('.needs-validation');
-        forms.forEach(form => {
-            form.addEventListener('submit', function(event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    }
-
-    // Contact Form Submission
-    function setupContactForm() {
-        const contactForm = document.getElementById('contactForm');
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzDhq712SGUmBfS6wlPAfkC4CegwZ3OdapCDjWrhqlMZX_Rqd2sCdoGb3_mHNfmuM41Lw/exec';
-
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                if (!this.checkValidity()) {
-                    event.stopPropagation();
-                    this.classList.add('was-validated');
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('name', document.getElementById('name').value);
-                formData.append('email', document.getElementById('email').value);
-                formData.append('subject', document.getElementById('subject').value);
-                formData.append('message', document.getElementById('message').value);
-
-                const submitButton = this.querySelector('button[type="submit"]');
-                const originalButtonText = submitButton.innerHTML;
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
-
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en el envío');
+        setupSmoothScroll() {
+            document.querySelectorAll('a.nav-link').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    const href = anchor.getAttribute('href');
+                    if (href && href !== '#') {
+                        e.preventDefault();
+                        const targetSection = document.querySelector(href);
+                        if (targetSection) {
+                            targetSection.scrollIntoView({ 
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            this.closeMobileMenu();
+                        }
                     }
-                    alert('Mensaje enviado correctamente');
-                    
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
-                    modal.hide();
-                    
-                    this.reset();
-                    this.classList.remove('was-validated');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error al enviar el mensaje: ' + error.message);
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = originalButtonText;
                 });
             });
-        }
-    }
+        },
 
-    // Social media links
-    function setupSocialLinks() {
-        const socialLinks = {
-            whatsapp: 'https://wa.me/50765360544',
-            linkedin: 'https://www.linkedin.com/in/jorgepolanco507/',
-            instagram: 'https://www.instagram.com/jorgepolanco507/',
-            reddit: 'https://www.reddit.com/user/BOREMAN507/',
-            spotify: 'https://open.spotify.com/user/12141488049'
-        };
+        setupMobileMenuClose() {
+            document.addEventListener('click', (e) => {
+                const isNavbarCollapsed = window.getComputedStyle(navbarCollapse).display !== 'none';
+                if (isNavbarCollapsed && !e.target.closest('.navbar')) {
+                    this.closeMobileMenu();
+                }
+            });
+        },
 
-        Object.keys(socialLinks).forEach(platform => {
-            const icon = document.querySelector(`.fa-${platform}`);
-            if (icon && icon.parentElement) {
-                icon.parentElement.href = socialLinks[platform];
-                icon.parentElement.target = '_blank';
-                icon.parentElement.rel = 'noopener noreferrer';  // ADDED: Security attribute
+        closeMobileMenu() {
+            if (window.innerWidth < 992 && navbarCollapse.classList.contains('show')) {
+                const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                bsCollapse.hide();
             }
-        });
-    }
+        }
+    };
+
+    const Animations = {
+        init() {
+            this.setupIntersectionObserver();
+        },
+
+        setupIntersectionObserver() {
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeIn');
+                        entry.target.style.opacity = 1;
+                        observer.unobserve(entry.target); // Dejar de observar después de animar
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                observer.observe(section);
+            });
+        }
+    };
+
+    const SocialLinks = {
+        init() {
+            const links = {
+                whatsapp: 'https://wa.me/50765360544',
+                linkedin: 'https://www.linkedin.com/in/jorgepolanco507/',
+                instagram: 'https://www.instagram.com/jorgepolanco507/',
+                reddit: 'https://www.reddit.com/user/BOREMAN507/',
+                spotify: 'https://open.spotify.com/user/12141488049'
+            };
+
+            Object.entries(links).forEach(([platform, url]) => {
+                const icon = document.querySelector(`.fa-${platform}`);
+                if (icon?.parentElement) {
+                    const link = icon.parentElement;
+                    link.href = url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                }
+            });
+        }
+    };
 
     // Event Listeners
-    themeSwitch.addEventListener('change', toggleTheme);
+    themeSwitch.addEventListener('change', () => Theme.toggle());
 
-    // Initialization
-    function init() {
-        initializeTheme();
-        initSmoothScroll();
-        setupSectionAnimations();
-        setupFormValidation();
-        setupContactForm();
-        setupSocialLinks();
-    }
+    // Inicialización de módulos
+    const initializeApp = () => {
+        try {
+            Theme.init();
+            Navigation.init();
+            Animations.init();
+            SocialLinks.init();
+        } catch (error) {
+            console.error('Error during initialization:', error);
+        }
+    };
 
-    // Start the application
-    init();
+    initializeApp();
 });
+
+// Función de alerta para el formulario de contacto
+function mostrarAlerta() {
+    alert('¡Gracias por tu interés! En breve te contactaré.');
+}
