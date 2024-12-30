@@ -208,7 +208,8 @@ const initializeApp = () => {
     } catch (error) {
         console.error('Error during initialization:', error);
     }
-    // Parallax para móviles y PC
+};
+// Parallax para móviles y PC
 document.addEventListener("DOMContentLoaded", function () {
     // Verifica si el navegador soporta background-attachment: fixed
     let supportsParallax = window.getComputedStyle(document.body).backgroundAttachment !== "scroll";
@@ -232,4 +233,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-};
+document.addEventListener("DOMContentLoaded", function () {
+    let parallaxElements = document.querySelectorAll('.parallax-divider');
+
+    function handleParallax() {
+        let offset = window.pageYOffset;
+
+        parallaxElements.forEach(function (element) {
+            let speed = 0.5; // Ajusta la velocidad
+            let elementOffset = element.offsetTop;
+            let elementHeight = element.offsetHeight;
+
+            if (offset + window.innerHeight > elementOffset && offset < elementOffset + elementHeight) {
+                let translateY = (offset - elementOffset) * speed;
+                element.style.transform = `translateY(${translateY}px)`;
+                element.style.willChange = "transform"; // Mejora el rendimiento
+            }
+        });
+    }
+
+    // Aplicar en todos los dispositivos
+    window.addEventListener('scroll', handleParallax);
+
+    // Forzar la ejecución inicial para configurarlo en dispositivos móviles
+    handleParallax();
+});
