@@ -1,0 +1,19 @@
+/* theme-switch.css (estilos específicos para el switch del tema) */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    cursor: pointer;
+    width: 3rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991.98px) {
+    .theme-switch-wrapper {
+        margin-right: 3rem;
+    }
+}

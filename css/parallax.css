@@ -1,0 +1,45 @@
+/* Contenedor principal para el efecto parallax */
+.parallax-divider {
+    min-height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Overlay para mejorar la visibilidad del contenido */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Imágenes específicas para cada sección */
+.perfil-divider {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg");
+}
+
+.habilidades-divider {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg");
+}
+
+.logros-divider {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg");
+}
+
+/* Ajustes para dispositivos móviles y tablets */
+@media only screen and (max-device-width: 1024px) {
+    .parallax-divider {
+        background-attachment: scroll;
+    }
+}

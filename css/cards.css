@@ -1,0 +1,63 @@
+/* cards.css (estilos específicos para cards) */
+.card {
+    background: var(--lt-color-white);
+    border: 1px solid var(--lt-color-gray-300);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: visible;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+body[data-bs-theme="dark"] .card {
+    background: var(--lt-color-gray-700);
+    border-color: var(--lt-color-gray-600);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    color: var(--lt-color-gray-700);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.2);
+    color: #007bff;
+}
+
+body[data-bs-theme="dark"] .card-icon {
+    color: var(--lt-color-white);
+}
+
+.card-img-top {
+    display: none;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: auto;
+    z-index: 10;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-img-top {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-img-top {
+        width: 150px;
+    }
+}
