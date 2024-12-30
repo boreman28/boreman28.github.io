@@ -1,4 +1,4 @@
-/* Estilos base para el efecto parallax */
+/* Contenedor principal para el efecto parallax */
 .parallax-divider {
     min-height: 400px;
     background-position: center;
@@ -9,10 +9,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
 }
 
-/* Overlay base */
+/* Overlay para mejorar la visibilidad del contenido */
 .overlay {
     position: absolute;
     top: 0;
@@ -20,10 +19,9 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s ease;
 }
 
-/* Imágenes específicas */
+/* Imágenes específicas para cada sección */
 .perfil-divider {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg");
@@ -39,35 +37,8 @@
         url("https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg");
 }
 
-/* Optimizaciones para dispositivos móviles */
-@media only screen and (max-width: 768px) {
-    .parallax-divider {
-        min-height: 250px; /* Altura reducida para móviles */
-        background-attachment: scroll; /* Desactiva el efecto parallax */
-        background-position: center center;
-        background-size: cover;
-    }
-    
-    /* Efecto alternativo para móviles */
-    .parallax-divider:hover {
-        transform: scale(1.02); /* Pequeño efecto de zoom al tocar */
-    }
-    
-    .overlay {
-        background-color: rgba(0, 0, 0, 0.6); /* Overlay más oscuro para mejor legibilidad */
-    }
-}
-
-/* Específicamente para iPads y tablets */
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-    .parallax-divider {
-        background-attachment: scroll;
-        min-height: 300px;
-    }
-}
-
-/* Fix específico para Safari en iOS */
-@supports (-webkit-touch-callout: none) {
+/* Ajustes para dispositivos móviles y tablets */
+@media only screen and (max-device-width: 1024px) {
     .parallax-divider {
         background-attachment: scroll;
     }
