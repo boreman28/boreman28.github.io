@@ -1,6 +1,6 @@
 # 💼 Sobre Mí  
 
-![Header](https://via.placeholder.com/1200x400.png?text=Bienvenido+a+mi+Perfil+Profesional)  
+
 
 📚 Soy un profesional apasionado por el aprendizaje continuo y el desarrollo personal. Desde joven, he cultivado un interés profundo por el conocimiento y las herramientas tecnológicas.  
 🌟 Mi enfoque en la **excelencia** y la **innovación** me ha permitido sobresalir en diversos campos, adaptándome a los constantes cambios del mundo profesional.  
