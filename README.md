@@ -51,14 +51,6 @@
 
 ---
 
-## 📬 Contáctame  
-
-- **LinkedIn:** [Conéctate aquí](https://linkedin.com/in/usuario)  
-- **GitHub:** [Visita mi repositorio](https://github.com/usuario)  
-- **Correo Electrónico:** [usuario@correo.com](mailto:usuario@correo.com)  
-
----
-
 ## 🎯 Mi Objetivo  
 
 Continuar creando e implementando soluciones innovadoras que generen un impacto positivo en las organizaciones, combinando mi experiencia técnica y mis habilidades de liderazgo.  
