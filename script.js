@@ -111,9 +111,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 spotify: 'https://open.spotify.com/user/12141488049'
             };
 
+            // Note: Social links are also hardcoded in the HTML.
+            // This script dynamically updates them, which might be redundant.
             Object.entries(links).forEach(([platform, url]) => {
                 const icon = document.querySelector(`.fa-${platform}`);
-                if (icon?.parentElement) {
+                if (icon && icon.parentElement) { // Added null check for icon
                     const link = icon.parentElement;
                     link.href = url;
                     link.target = '_blank';
@@ -126,26 +128,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     themeSwitch.addEventListener('change', () => Theme.toggle());
 
-    // Inicialización de módulos
-    const initializeApp = () => {
-        try {
-            Theme.init();
-            Navigation.init();
-            Animations.init();
-            SocialLinks.init();
-        } catch (error) {
-            console.error('Error during initialization:', error);
-        }
-    };
-
-    initializeApp();
+    // The initializeApp call that was previously here has been successfully moved 
+    // to the end of the script, after the initializeApp definition.
 });
 
 // Función de alerta para el formulario de contacto
+/*
 function mostrarAlerta() {
     alert('¡Gracias por tu interés! En breve te contactaré.');
 }
-// Añadir dentro del DOMContentLoaded, después de initializeApp();
+*/
+// The initializeApp call is now correctly placed within a DOMContentLoaded listener 
+// at the end of this script.
 
 const NavbarEffects = {
     init() {
@@ -209,3 +203,10 @@ const initializeApp = () => {
         console.error('Error during initialization:', error);
     }
 };
+
+// Call initializeApp after DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure all modules are defined before calling initializeApp
+    // Theme, Navigation, Animations, SocialLinks, NavbarEffects should be defined above this call
+    initializeApp();
+});

@@ -15,13 +15,18 @@
 }
 
 /* Estilos base */
+/* scroll-padding-top is used for better handling of fixed navigation */
+html {
+    scroll-padding-top: 70px; /* Adjust as needed to prevent content overlap with fixed navbar */
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: var(--lt-color-gray-200);
     color: var(--lt-color-gray-900);
     transition: all 0.3s ease;
     line-height: 1.6;
-    margin-top: 60px; /* Añadido para el navbar fixed */
+    /* margin-top: 60px; */ /* Replaced by scroll-padding-top on html element for better fixed navbar spacing */
 }
 
 /* Modo oscuro */
@@ -42,42 +47,7 @@ body[data-bs-theme="dark"] .navbar {
     background-color: var(--lt-color-gray-900);
 }
 
-/* Cards */
-.card {
-    background: var(--lt-color-white);
-    border: 1px solid var(--lt-color-gray-300);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Añadido para las imágenes hover */
-    overflow: visible; /* Permite que las imágenes hover se muestren fuera de la card */
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-body[data-bs-theme="dark"] .card {
-    background: var(--lt-color-gray-700);
-    border-color: var(--lt-color-gray-600);
-}
-
-/* Iconos de card */
-.card-icon {
-    font-size: 2.5rem;
-    color: var(--lt-color-gray-700);
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.card:hover .card-icon {
-    transform: scale(1.2);
-    color: #007bff;
-}
-
-body[data-bs-theme="dark"] .card-icon {
-    color: var(--lt-color-white);
-}
+/* Card styles moved to css/cards.css */
 
 /* Botones */
 .btn-primary, .btn-secondary {
@@ -128,24 +98,7 @@ body[data-bs-theme="dark"] .card-icon {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Imágenes en cards */
-.card-img-top {
-    display: none;
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: auto;
-    z-index: 10;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.card:hover .card-img-top {
-    display: block;
-}
+/* Card styles moved to css/cards.css */
 
 /* Botón de WhatsApp */
 .whatsapp-button {
@@ -184,16 +137,9 @@ body[data-bs-theme="dark"] .card-icon {
 
 /* Media queries */
 @media (max-width: 768px) {
-    .card:hover {
-        transform: translateY(-5px);
-    }
-    
+    /* Card-specific styles .card:hover and .card-img-top moved to cards.css */
     .social-icons {
         justify-content: center;
-    }
-    
-    .card-img-top {
-        width: 150px;
     }
 }
 .navbar {
@@ -290,6 +236,26 @@ body[data-bs-theme="dark"] .navbar {
         background-color: rgba(var(--bs-primary-rgb), 0.1);
     }
 
+    .theme-switch-wrapper {
+        margin-right: 3rem;
+    }
+}
+
+/* theme-switch.css (estilos específicos para el switch del tema) */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    cursor: pointer;
+    width: 3rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991.98px) {
     .theme-switch-wrapper {
         margin-right: 3rem;
     }
