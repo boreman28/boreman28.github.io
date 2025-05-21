@@ -141,6 +141,49 @@ function mostrarAlerta() {
 // The initializeApp call is now correctly placed within a DOMContentLoaded listener 
 // at the end of this script.
 
+const ParallaxEffect = {
+    elements: [],
+    speedFactor: 0.5, // Adjust this value for desired parallax intensity (0.1 to 0.9)
+
+    init: function() {
+        this.elements = Array.from(document.querySelectorAll('.parallax-divider'));
+        if (!this.elements.length) return;
+
+        this.updateElementProperties(); // Initial calculation
+
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+        window.addEventListener('resize', this.updateElementProperties.bind(this));
+    },
+
+    updateElementProperties: function() {
+        this.elements.forEach(el => {
+            el.parallaxData = {
+                offsetTop: el.offsetTop,
+                offsetHeight: el.offsetHeight
+            };
+        });
+        // Trigger a scroll handle in case positions changed affecting current view
+        this.handleScroll(); 
+    },
+
+    handleScroll: function() {
+        const viewportTop = window.pageYOffset;
+        const viewportBottom = viewportTop + window.innerHeight;
+
+        this.elements.forEach(el => {
+            const elData = el.parallaxData;
+            if (!elData) return;
+
+            // Check if element is roughly in viewport
+            if (elData.offsetTop + elData.offsetHeight > viewportTop && elData.offsetTop < viewportBottom) {
+                const scrollDistance = viewportTop - elData.offsetTop;
+                const newBackgroundPositionY = scrollDistance * this.speedFactor;
+                el.style.backgroundPositionY = newBackgroundPositionY + 'px';
+            }
+        });
+    }
+};
+
 const NavbarEffects = {
     init() {
         this.setupActiveLinks();
@@ -199,6 +242,7 @@ const initializeApp = () => {
         Animations.init();
         SocialLinks.init();
         NavbarEffects.init(); // Añadir esta línea
+        ParallaxEffect.init(); // Add this line
     } catch (error) {
         console.error('Error during initialization:', error);
     }
