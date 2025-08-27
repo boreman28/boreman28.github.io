@@ -111,9 +111,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 spotify: 'https://open.spotify.com/user/12141488049'
             };
 
+            // Note: Social links are also hardcoded in the HTML.
+            // This script dynamically updates them, which might be redundant.
             Object.entries(links).forEach(([platform, url]) => {
                 const icon = document.querySelector(`.fa-${platform}`);
-                if (icon?.parentElement) {
+                if (icon && icon.parentElement) { // Added null check for icon
                     const link = icon.parentElement;
                     link.href = url;
                     link.target = '_blank';
@@ -126,26 +128,61 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners
     themeSwitch.addEventListener('change', () => Theme.toggle());
 
-    // Inicialización de módulos
-    const initializeApp = () => {
-        try {
-            Theme.init();
-            Navigation.init();
-            Animations.init();
-            SocialLinks.init();
-        } catch (error) {
-            console.error('Error during initialization:', error);
-        }
-    };
-
-    initializeApp();
+    // The initializeApp call that was previously here has been successfully moved 
+    // to the end of the script, after the initializeApp definition.
 });
 
 // Función de alerta para el formulario de contacto
+/*
 function mostrarAlerta() {
     alert('¡Gracias por tu interés! En breve te contactaré.');
 }
-// Añadir dentro del DOMContentLoaded, después de initializeApp();
+*/
+// The initializeApp call is now correctly placed within a DOMContentLoaded listener 
+// at the end of this script.
+
+const ParallaxEffect = {
+    elements: [],
+    speedFactor: 0.5, // Adjust this value for desired parallax intensity (0.1 to 0.9)
+
+    init: function() {
+        this.elements = Array.from(document.querySelectorAll('.parallax-divider'));
+        if (!this.elements.length) return;
+
+        this.updateElementProperties(); // Initial calculation
+
+        window.addEventListener('scroll', this.handleScroll.bind(this));
+        window.addEventListener('resize', this.updateElementProperties.bind(this));
+    },
+
+    updateElementProperties: function() {
+        this.elements.forEach(el => {
+            el.parallaxData = {
+                offsetTop: el.offsetTop,
+                offsetHeight: el.offsetHeight
+            };
+        });
+        // Trigger a scroll handle in case positions changed affecting current view
+        this.handleScroll(); 
+    },
+
+    handleScroll: function() {
+        const viewportTop = window.pageYOffset;
+        const viewportBottom = viewportTop + window.innerHeight;
+
+        this.elements.forEach(el => {
+            const elData = el.parallaxData;
+            if (!elData) return;
+
+            // Check if element is roughly in viewport
+            if (elData.offsetTop + elData.offsetHeight > viewportTop && elData.offsetTop < viewportBottom) {
+                const scrollDistance = viewportTop - elData.offsetTop;
+                const newBackgroundPositionY = scrollDistance * this.speedFactor;
+                el.style.backgroundPositionY = newBackgroundPositionY + 'px';
+            }
+        });
+    }
+};
 
 const NavbarEffects = {
     init() {
@@ -205,7 +242,15 @@ const initializeApp = () => {
         Animations.init();
         SocialLinks.init();
         NavbarEffects.init(); // Añadir esta línea
+        ParallaxEffect.init(); // Add this line
     } catch (error) {
         console.error('Error during initialization:', error);
     }
 };
+
+// Call initializeApp after DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure all modules are defined before calling initializeApp
+    // Theme, Navigation, Animations, SocialLinks, NavbarEffects should be defined above this call
+    initializeApp();
+});

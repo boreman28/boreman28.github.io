@@ -2,8 +2,8 @@
 .parallax-divider {
     position: relative;
     height: 300px;
-    background-attachment: fixed;
-    background-position: center;
+    /* background-attachment: fixed; */ /* Removed for JS control */
+    background-position: center center; /* Ensured for JS control */
     background-repeat: no-repeat;
     background-size: cover;
     margin: 2rem 0;
@@ -30,21 +30,4 @@
      background-image: url("https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg");
 }
 
-/* Ajustes para dispositivos móviles y tablets */
-@media (max-width: 768px) {
-    .parallax-divider {
-        height: 200px;
-        background-attachment: scroll; /* Change to scroll for mobile */
-        background-position: center center;
-        margin: 1rem 0;
-    }
-}
-
-/* For devices that don't support fixed background */
-@supports (-webkit-touch-callout: none) {
-    .parallax-divider {
-        background-attachment: scroll;
-    }
-}
-
-
+/* Media queries and @supports rules removed for JS-controlled parallax */
